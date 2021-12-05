@@ -436,31 +436,53 @@ for(i in 1:length(forecastStores)){
 
 ```
 
+```{r}
+ggplot(valid, aes(x= as.Date(row.names(valid)))) +
+geom_line(aes(y = Weekly_Sales, color = "darkred", linetype="solid"),size=1) +
+geom_line(aes(y = ArimaPredict, color="blue", linetype="dashed")) +
+xlab('x') +
+ylab('density') +
+scale_x_date(breaks= seq(as.Date("2012-06-29"),as.Date("2012-10-26"),by="1 months"),date_labels="%b\n%Y") +
+xlab("Forecast horizon")+
+ylab("Weekly sales in dollars in millions") +
+ggtitle("Arima Model has a MAPE of 5.57  ") +
+scale_fill_identity(name = '', guide = 'legend',labels = c('m1')) +
+scale_colour_manual(name = 'Model',   values=c('darkred'='darkred','blue'='blue'), labels = c('Weekly Sales','ARIMA Prediction')) +
+scale_linetype_manual(name = 'Model', values=c('solid'='solid','dashed'='dashed'), labels = c('Weekly Sales','ARIMA Prediction'))
+```
 
 ```{r}
-train_walmart2$Weekly_SalesMil = train_walmart2$Weekly_Sales/1000000
-#train_walmart2$Year <-factor(train_walmart2$Year, levels= c("2010","2011","2012"))
-  ggplot(train_walmart2,aes(x=Date,y=Weekly_SalesMil)) +
-  geom_line(color="steelblue3") +
-    scale_x_date(breaks= seq(as.Date("2010-02-05"),as.Date("2013-01-01"),by="4 months"),date_labels="%b\n%Y")+
-  xlab("Year")+
-  ylab("Weekly sales in dollars in millions") +
-  ggtitle("Average Weekly sales aggregated across all walmart stores")
-
+ggplot(valid, aes(x= as.Date(row.names(valid)))) +
+geom_line(aes(y = Weekly_Sales, color = "darkred", linetype="solid"),size=1) +
+geom_line(aes(y = NnetarPredict, color="blue", linetype="dashed")) +
+xlab('x') +
+ylab('density') +
+scale_x_date(breaks= seq(as.Date("2012-06-29"),as.Date("2012-10-26"),by="1 months"),date_labels="%b\n%Y") +
+xlab("Forecast horizon")+
+ylab("Weekly sales in dollars in millions") +
+ggtitle("NnetarPredict Model has a MAPE of 8.4  ") +
+scale_fill_identity(name = '', guide = 'legend',labels = c('m1')) +
+scale_colour_manual(name = 'Model',   values=c('darkred'='darkred','blue'='blue'), labels = c('Weekly Sales','NNETAR Prediction')) +
+scale_linetype_manual(name = 'Model', values=c('solid'='solid','dashed'='dashed'), labels = c('Weekly Sales','NNETAR Prediction'))
 ```
 
 
 ```{r}
-  ggplot(valid, aes(x= as.Date(row.names(valid)))) + 
-  geom_line(aes(y = Weekly_Sales), color = "darkred",size=1) + 
-  geom_line(aes(y = ArimaPredict), color="red", linetype="twodash")+
-  geom_line(aes(y = NnetarPredict ), color="blue", linetype="longdash")+
-  geom_line(aes(y = xgbPredict), color="black", linetype="dashed")+
-  scale_x_date(breaks= seq(as.Date("2012-06-29"),as.Date("2012-10-26"),by="1 months"),date_labels="%b\n%Y") +
-  xlab("Forecast horizon")+
-  ylab("Weekly sales in dollars in millions") +
-  ggtitle("Comparision of all models over the 18 week forecast horizon")
-
+ggplot(valid, aes(x= as.Date(row.names(valid)))) +
+geom_line(aes(y = Weekly_Sales, color = "darkred", linetype="solid"),size=1) +
+geom_line(aes(y = ArimaPredict, color="red", linetype="dashed")) +
+geom_line(aes(y = NnetarPredict, color="blue", linetype="dotted" )) +
+geom_line(aes(y = xgbPredict, color="sienna4", linetype="longdash")) +
+xlab('x') +
+ylab('density') +
+scale_x_date(breaks= seq(as.Date("2012-06-29"),as.Date("2012-10-26"),by="1 months"),date_labels="%b\n%Y") +
+xlab("Forecast horizon")+
+ylab("Weekly sales in dollars in millions") +
+ggtitle("Comparison of all models over the 18 week forecast horizon") +
+scale_fill_identity(name = '', guide = 'legend',labels = c('m1')) +
+scale_colour_manual(name = 'Model',   values=c('darkred'='darkred','red'='red','blue'='blue','sienna4'='sienna4'), labels = c('Weekly Sales','ARIMA Prediction','NNETAR Prediction','XGboost prediction')) +
+scale_linetype_manual(name = 'Model', values=c('solid'='solid','dashed'='dashed','dotted'='dotted','longdash'='longdash'), labels = c('Weekly Sales','ARIMA Prediction','NNETAR Prediction','XGboost prediction'))
 ```
+
 
 
