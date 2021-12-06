@@ -1,6 +1,8 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  pdf_document: default
+  html_notebook: default
 ---
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
@@ -188,7 +190,7 @@ train_walmart
 
 
 ```{r, results='hide'}
-install.packages('fpp2', dependencies = TRUE)
+#install.packages('fpp2', dependencies = TRUE)
 ```
 
 
@@ -266,7 +268,7 @@ train_walmart_split  <- split(train_walmart, f = train_walmart$Store)
 ```
 
 ```{r}
-install.packages("MLmetrics")
+#install.packages("MLmetrics")
 ```
 
 
@@ -307,11 +309,11 @@ for(i in 1:length(train_walmart_split)){
 ```
 
 ```{r message=FALSE, warning = FALSE}
-install.packages("vars")
-install.packages("mFilter")
-install.packages("TSstudio")
-install.packages("forecast")
-install.packages("xts", repos="http://cloud.r-project.org")
+#install.packages("vars")
+#install.packages("mFilter")
+#install.packages("TSstudio")
+#install.packages("forecast")
+#install.packages("xts", repos="http://cloud.r-project.org")
 
 ```
 
@@ -398,40 +400,42 @@ external_reg <- c("MarkDown1","MarkDown2","MarkDown3","MarkDown4","MarkDown5","C
 external_reg1 <- as.matrix(train[,external_reg])
 external_reg2 <- as.matrix(valid[,external_reg])
 fit <- nnetar(mts, repeats=100, maxit=100, xreg = external_reg1)
-predict <- forecast(fit,xreg = external_reg2)
-#lines(train)
+plot(forecast(fit,xreg = external_reg1))
+#predict <- forecast(fit,xreg = external_reg1)
+lines(train)
 ```
 
 
 ```{r}
-colnames(predict) <- "Forecast"
+fit
 ```
 
 ```{r}
- mapeValue <- mean(abs(pred_table$actual-pred_table$forecast)/pred_table$actual) * 100
+#valid_length = length(valid[,external_reg])
+#fcast <- forecast(fit, xreg=external_reg2,h=valid_length, PI = TRUE)
+#date<-format(lubridate::date_decimal(as.numeric(row.names(as.data.frame(fcast)))),"%Y-%m-%d")
+#fcast1 <- cbind(date,as.data.frame(fcast))
+#autoplot(fcast)
 ```
 
+```{r}
+#fcast
+```
 
 # simulating for prediction
 ```{r}
-valid_length = length(valid)
-fcast <- forecast(fit, xreg=external_reg, PI=TRUE)
-autoplot(fcast)
+#fcast1
 ```
 
 ```{r}
- mapeValue <- mean(abs(valid$Weekly_Sales-predict["Point Forecast"])/valid$Weekly_Sales) * 100
+#mapeValue <- mean(abs(valid$Weekly_Sales-predict["Point Forecast"])/valid$Weekly_Sales) * 100
 ```
 
 ```{r}
-accuracy(fcast)
+#accuracy(fcast)
 ```
 
 ```{r}
-newxreg = ts(valid[, features], start = c(2012,21),frequency=365.25/7)
-external_reg <- as.matrix(valid[,external_reg])
-fit <- nnetar(mts, repeats=100, maxit=100, xreg = external_reg)
-plot(forecast(fit,xreg = external_reg))
-lines(train)
+
 ```
 
